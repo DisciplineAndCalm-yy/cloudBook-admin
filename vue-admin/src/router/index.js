@@ -7,14 +7,19 @@ Vue.use(Router)
 const components = {
   login: () => import('@/views/login'),
   layout: () => import('@/views/layout'),
-  index: () => import('@/views/index')
+  index: () => import('@/views/index'),
+  users: () => import('@/views/users'),
+  addAdmin: () => import('@/views/addAdmin')
 }
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'login',
+      redirect: '/login'
+    },
+    {
+      path:'/login',
       component: components.login
     },
     {
@@ -22,10 +27,24 @@ export default new Router({
       name: 'layout',
       component: components.layout,
       redirect: '/layout/index',
+      meta: {
+        title: '首页'
+      },
       children: [
         {
           path: 'index',
           component: components.index
+        },
+        {
+          path: 'users',
+          meta: {
+            title: '用户管理'
+          },
+          component: components.users
+        },
+        {
+          path: 'addAdmin',
+          component: components.addAdmin
         }
       ]
     }
