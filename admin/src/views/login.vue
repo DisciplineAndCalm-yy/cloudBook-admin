@@ -11,7 +11,7 @@
                     <el-input v-model="formData.password" type="password" placeholder='请输入密码'></el-input>
                 </el-form-item>
             </el-form>
-            <el-button @click="handleLogin" :isLoading='isLoading' type='primary' class="btn">登录</el-button>
+            <el-button @click="handleLogin" :loading='isLoading' type='primary' class="btn">登录</el-button>
         </div>
     </div>
 </template>
@@ -37,7 +37,7 @@ export default {
                   this.$message.success('登录成功')
                   setTimeout(() => {
                       this.$router.push('/layout/index')
-                  }, 2000)
+                  }, 1000)
               } else {
                   this.$message.error('登录失败')
               }
@@ -71,7 +71,7 @@ export default {
     border-radius: 6px;
     padding: 40px;
     background: #f1f1f1;
-    margin: 20px auto 0;
+    margin: 60px auto 0;
 
     .box-title{
         text-align: center;
