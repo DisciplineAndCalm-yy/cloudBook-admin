@@ -22,7 +22,6 @@
             </el-table-column>
             <el-table-column label="操作" width="180">
                 <template slot-scope="scope">
-                    <el-button size="mini" type='primary' @click="handleLook">查看信息</el-button>
                     <el-button size="mini" type="danger" @click="handleDelete(scope.row._id)">删除</el-button>
                 </template>
             </el-table-column>   
@@ -56,9 +55,6 @@ export default {
                     this.tableData = res.data
                 }
             })
-        },
-        handleLook() {
-            this.$router.push('/layout/details')
         },
         handleDelete(id) {
             this.$confirm('此操作将永久删除一位管理员, 是否继续?', '警告', { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning'}).then(() => {

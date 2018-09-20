@@ -40,6 +40,11 @@
                         <template slot="title">图书管理</template>
                         <el-menu-item index="/layout/addBook">添加图书</el-menu-item>
                     </el-submenu>
+                    <el-submenu index="1-5">
+                        <template slot="title">轮播图管理</template>
+                        <el-menu-item index="/layout/showswiper">轮播图列表</el-menu-item>
+                        <el-menu-item index="/layout/addswiper">添加轮播图</el-menu-item>
+                    </el-submenu>
                 </el-submenu>
                 <el-menu-item index="2" disabled>
                     <i class="el-icon-menu"></i>

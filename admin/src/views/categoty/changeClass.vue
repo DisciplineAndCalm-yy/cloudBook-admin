@@ -20,7 +20,7 @@
                 <el-input v-model="formData.index"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button @click="handleClick">提交</el-button>
+                <el-button @click="handleSubmit">提交</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -50,7 +50,14 @@
                 // console.log(typeId)
                 this.typeId = typeId
                 this.$axios.get('/category').then(res => {
+                    // console.log(res)
                     this.tableData = res.data
+                })
+                this.$axios.get(`/category/${typeId}`).then(res => {
+                    console.log(res)
+                    this.formData = { 
+                        ...this.formData, ...res.data 
+                        }
                 })
             },
             // initData() {
@@ -58,13 +65,15 @@
             //         ...this.$store.state.catalogId
             //     }
             // },
-            handleClick() {
+            handleSubmit() {
                 this.$axios.put(`/category/${this.typeId}`, this.formData).then(res => {
+                    // console.log(res)
                     if(res.code == 200) {
                         this.$message({
                             type: 'success',
                             message: '修改成功！'
                         })
+                        this.getData()
                         this.$router.push('/layout/showClass')
                     }
                 }).catch(() => {

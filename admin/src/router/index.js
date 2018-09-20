@@ -9,14 +9,16 @@ const components = {
   layout: () => import('@/views/layout'),
   index: () => import('@/views/index'),
   users: () => import('@/views/user/users'),
-  addAdmin: () => import('@/views/addAdmin'),
+  addAdmin: () => import('@/views/user/addAdmin'),
   userEdit: () => import('@/views/user/userEdit'),
   test: () => import('@/test-form/test'),
   showClass: () => import('@/views/categoty/showClass'),
   addClass: () => import('@/views/categoty/addClass'),
   changeClass: () => import('@/views/categoty/changeClass'),
   bookCatelog: () => import('@/views/book/bookCatelog'),
-  addBook: () => import('@/views/book/addBook')
+  addBook: () => import('@/views/book/addBook'),
+  showswiper: () => import('@/views/swiper/showswiper'),
+  addswiper: () => import('@/views/swiper/addswiper')
 }
 
 export default new Router({
@@ -83,6 +85,17 @@ export default new Router({
         {
           path: 'addBook',
           component: components.addBook
+        },
+        {
+          path: 'showswiper',
+          component: components.showswiper
+        },
+        {
+          path: 'addswiper',
+          component: components.addswiper,
+          meta: {
+            title: '添加轮播图'
+          }
         }
       ]
     },

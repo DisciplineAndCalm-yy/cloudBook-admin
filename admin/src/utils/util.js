@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Message } from 'element-ui';
 
 const baseURL = '/api/admin'
 
@@ -12,6 +13,10 @@ const xhr = {
     get(url, data, config) {
         return new Promise((resolve, reject) => {
             instance.get(url, {params: data}, config).then(res => {
+                if(res.code == 401) {
+                    Message.error('登录状态失效，请重新登录！')
+                    router.push('/login')
+                }
                 resolve(res.data)
             })
         })
@@ -19,6 +24,10 @@ const xhr = {
     post(url, data, config) {
         return new Promise((resolve, reject) => {
             instance.post(url, data, config).then(res => {
+                if(res.code == 401) {
+                    Message.error('登录状态失效，请重新登录！')
+                    router.push('/login')
+                }
                 resolve(res.data)
             }).catch(err => {
                 reject(err)
@@ -37,6 +46,10 @@ const xhr = {
     fetch(url, data, config, methods) {
         return new Promise((resolve, reject) => {
             instance[methods](url, data, config).then(res => {
+                if(res.code == 401) {
+                    Message.error('登录状态失效，请重新登录！')
+                    router.push('/login')
+                }
                 resolve(res.data)
             }).catch(err => {
                 reject(err)
