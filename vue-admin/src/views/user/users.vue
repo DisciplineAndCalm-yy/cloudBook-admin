@@ -4,7 +4,7 @@
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{ path: '/layout/index' }">首页</el-breadcrumb-item>
                 <el-breadcrumb-item :to="{ path: '/layout/users' }">用户列表</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: '/layout/details' }">个人信息</el-breadcrumb-item>
+                <el-breadcrumb-item>个人信息</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <el-table :data="tableData" style="width: 100%">
@@ -58,7 +58,7 @@ export default {
             })
         },
         handleLook() {
-            this.Router.push('/layout/details')
+            this.$router.push('/layout/details')
         },
         handleDelete(id) {
             this.$confirm('此操作将永久删除一位管理员, 是否继续?', '警告', { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning'}).then(() => {

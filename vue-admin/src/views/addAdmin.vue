@@ -6,15 +6,19 @@
                 <el-input class="iform" v-model="formData.username" placeholder="请输入用户名"></el-input>
             </div>
             <div>
-                <span>密码：&nbsp&nbsp&nbsp</span>
+                <span>密码：</span>
                 <el-input class="iform" v-model="formData.password" type="password" placeholder="请输入密码"></el-input>
             </div>
             <div>
-                <span>昵称：&nbsp&nbsp&nbsp</span>
+                <span>确认密码：</span>
+                <el-input class="iform" v-model="checkPassword" type="password" placeholder="请输入密码"></el-input>
+            </div>
+            <div>
+                <span>昵称：</span>
                 <el-input class="iform" v-model="formData.nickname" placeholder="请输入昵称"></el-input>
             </div>
             <div>
-                <span>邮箱：&nbsp&nbsp&nbsp</span>
+                <span>邮箱：</span>
                 <el-input class="iform" v-model="formData.email" placeholder="请输入邮箱"></el-input>
             </div>
             <div class="foot">
@@ -23,15 +27,7 @@
             </div>
             <div class="avatar-box">
                 <span>头像：</span>
-                <el-upload
-                    class="avatar-uploader"
-                    action="https://upload-zi.qiniup.com"
-                    :show-file-list="false"
-                    :on-success="handleAvatarSuccess"
-                    :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
+                <upload v-model="formData.avatar"></upload>
             </div>
         </div>
         <el-button class="btn" type="primary" @click="handleAdd">添加管理员</el-button>
@@ -39,22 +35,33 @@
 </template>
 
 <script>
+import upload from '@/components/test-upload'
+
+import axios from 'axios'
+
 export default {
+  components: {
+    upload
+  },
   data() {
     return {
       formData: {
+        avatar: "",
         username: "",
         nickname: "",
         password: "",
         email: "",
         desc: ""
       },
-      imgUrl: ""
+      checkPassword: "",
+      imgUrl: "",
+      token: ""
     };
   },
   methods: {
     handleAdd() {
-      this.$axios
+      if(this.formData.password == this.checkPassword){
+        this.$axios
         .post("/user", this.formData)
         .then(res => {
           console.log(res);
@@ -66,7 +73,6 @@ export default {
               });
             }, 1000);
           } else {
-            console.log(1111111111111);
             this.$message({
               type: "info",
               message: "添加失败！"
@@ -76,10 +82,40 @@ export default {
         .catch(err => {
           console.log(err);
         });
+      } else {
+        this.$message({
+          type: "info",
+          message: "两次输入的密码不一样，请重新输入"
+        })
+      }
     },
-    imageUrl() {},
-    handleAvatarSuccess() {},
-    beforeAvatarUpload() {}
+    imageUrl() {
+      this.imageUrl = imageUrl
+    },
+    handleAvatarSuccess(res, file) {
+      this.imgUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if(!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if(!isLt2M) {
+        this.$message.erro('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
+    getToken() {
+      axios.get('http://upload.yaojunrong.com/getToken').then(res => {
+        console.log(res);
+        this.token = res.data.data
+      })
+    }
+  },
+  created() {
+    this.getToken()
   }
 };
 </script>
