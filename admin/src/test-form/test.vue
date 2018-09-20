@@ -21,10 +21,13 @@
         </div> -->
 
 
-        <upload @success="uploadImg"></upload>
+        <!-- <upload @success="uploadImg"></upload>
         <div style="border: 1px solid #e8e8e8">
             <img :src="imgUrl" >
-        </div>
+        </div> -->
+
+
+        <checkbox></checkbox>
     </div>
 </template>
 
@@ -32,11 +35,13 @@
     import axios from 'axios'
 
     import upload from '@/components/test-upload'
+    import checkbox from '@/components/checkbox'
 
     export default {
         name: 'index',
         components: {
-            upload
+            upload,
+            checkbox
         },
         data() {
             return {

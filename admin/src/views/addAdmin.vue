@@ -27,15 +27,7 @@
             </div>
             <div class="avatar-box">
                 <span>头像：</span>
-                <el-upload
-                    class="avatar-uploader"
-                    action="https://upload-z1.qiniup.com"
-                    :show-file-list="false"
-                    :on-success="handleAvatarSuccess"
-                    :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
+                <upload v-model="formData.avatar"></upload>
             </div>
         </div>
         <el-button class="btn" type="primary" @click="handleAdd">添加管理员</el-button>
@@ -43,11 +35,18 @@
 </template>
 
 <script>
+import upload from '@/components/test-upload'
+
 import axios from 'axios'
+
 export default {
+  components: {
+    upload
+  },
   data() {
     return {
       formData: {
+        avatar: "",
         username: "",
         nickname: "",
         password: "",
